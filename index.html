@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html charset=utf-8"/>
+<!-- importing React -->
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<!-- importing React-Dom -->
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+<!-- importing babel for jsx -->
+<script src=" https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<!-- importing the remarkable plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.js"></script>
+</head>
+<body>
+<div id="textBox">
+<script type="text/jsx">
+class MarkdownEditor extends React.Component {
+      constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.state = {value: 'This is my first example'};
+      }
+      handleChange(e) {
+        this.setState({value: e.target.value});
+      }
+      getRawMarkup() {
+            var md = new Remarkable();
+            return { __html: md.render(this.state.value) };
+          }
+      render() {
+        return (
+          <div className="MarkdownEditor">
+            <h3>Input</h3>
+            <textarea
+              onChange={this.handleChange}
+              defaultValue={this.state.value} />
+            <h3>Output</h3>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={this.getRawMarkup()}
+            />
+          </div>
+        );
+      }
+}
+ReactDOM.render(<MarkdownEditor />, textBox);
+</script>
+</body>
+<html>
